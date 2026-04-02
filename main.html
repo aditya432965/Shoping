@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxe Watches | Collections</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Luxe Watches | Elite Collections</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --white: #ffffff; }
-        body { margin: 0; font-family: 'Inter', sans-serif; background: #f4f4f4; color: var(--dark); overflow-x: hidden; }
+        :root { 
+            --gold: #d4af37; 
+            --gold-bright: #f1c40f;
+            --dark: #0a0a0a; 
+            --white: #ffffff; 
+            --glass: rgba(255, 255, 255, 0.1);
+        }
 
-        /* Hero Section */
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: #0f0f0f; 
+            color: var(--white); 
+            overflow-x: hidden; 
+        }
+
+        /* Hero Section - High Energy */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
                         url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
@@ -21,99 +34,204 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: white;
             padding: 20px;
+            animation: fadeIn 1.5s ease;
         }
 
-        .welcome-text { font-size: 1.2rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.9; }
-        .shop-name { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); margin: 0; }
-        .hero-tagline { font-size: 1.1rem; max-width: 600px; margin: 20px 0; line-height: 1.6; font-weight: 300; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .hero-btns { display: flex; gap: 15px; margin-top: 30px; }
+        .welcome-text { 
+            font-size: 1rem; 
+            letter-spacing: 8px; 
+            text-transform: uppercase; 
+            margin-bottom: 20px; 
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .shop-name { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(3rem, 10vw, 6rem); 
+            background: linear-gradient(to bottom, #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0; 
+            line-height: 1;
+        }
+
+        .hero-tagline { 
+            font-size: 1.2rem; 
+            max-width: 700px; 
+            margin: 30px 0; 
+            line-height: 1.8; 
+            font-weight: 300; 
+            opacity: 0.8;
+        }
+
+        .hero-btns { display: flex; gap: 20px; margin-top: 20px; }
+        
         .btn { 
-            padding: 15px 35px; border-radius: 50px; border: none; font-weight: 600; 
-            cursor: pointer; transition: 0.3s; text-decoration: none; font-size: 0.9rem;
+            padding: 18px 45px; 
+            border-radius: 50px; 
+            border: none; 
+            font-weight: 800; 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            text-decoration: none; 
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-gold { background: var(--gold); color: black; }
-        .btn-outline { background: transparent; color: white; border: 2px solid white; }
-        .btn:hover { transform: scale(1.05); }
+
+        .btn-gold { background: var(--gold); color: black; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+        .btn-outline { background: transparent; color: white; border: 2px solid var(--gold); }
+        
+        .btn:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5); }
 
         /* Shop Section */
-        .shop-container { max-width: 1200px; margin: 50px auto; padding: 0 20px; display: none; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .shop-container { 
+            max-width: 1300px; 
+            margin: 80px auto; 
+            padding: 0 30px; 
+            display: none; 
+            animation: slideUp 0.8s ease forwards;
+        }
 
-        /* Amazon-Style Card */
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
+
+        /* Luxury Product Card */
         .product-card { 
-            background: white; border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
-            display: flex; flex-direction: column;
+            background: #1a1a1a; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            border: 1px solid #333;
+            transition: 0.4s;
+            position: relative;
         }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .img-holder { width: 100%; height: 250px; background: #eee; position: relative; }
-        .img-holder img { width: 100%; height: 100%; object-fit: cover; }
 
-        .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .info h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
-        .info p { font-size: 0.85rem; color: #666; margin-bottom: 15px; flex-grow: 1; }
-        .price { font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 15px; }
+        .product-card:hover { border-color: var(--gold); transform: translateY(-10px); }
 
-        /* Counter UI */
-        .actions { display: flex; align-items: center; gap: 10px; }
+        .img-holder { 
+            width: 100%; 
+            height: 320px; 
+            background: #222; 
+            position: relative; 
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .img-holder img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: 0.6s;
+        }
+
+        .product-card:hover .img-holder img { transform: scale(1.1); }
+
+        .expand-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 12px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .product-card:hover .expand-overlay { opacity: 1; }
+
+        .info { padding: 25px; }
+        .info h3 { margin: 0 0 10px 0; font-size: 1.4rem; font-family: 'Playfair Display', serif; color: var(--gold); }
+        .info p { font-size: 0.9rem; color: #bbb; line-height: 1.5; height: 45px; overflow: hidden; }
+        .price { font-size: 1.8rem; font-weight: 800; color: white; margin: 15px 0; }
+
+        .actions { display: flex; align-items: center; gap: 15px; }
         .qty-box { 
-            display: flex; align-items: center; border: 1px solid #ddd; 
-            border-radius: 5px; overflow: hidden;
+            display: flex; align-items: center; 
+            background: #222; border-radius: 10px; padding: 5px;
         }
-        .qty-btn { padding: 8px 12px; background: #f8f9fa; border: none; cursor: pointer; font-weight: bold; }
-        .qty-val { padding: 0 15px; font-weight: 600; }
+        .qty-btn { width: 35px; height: 35px; background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.2rem; font-weight: bold; }
+        .qty-val { padding: 0 15px; font-weight: 700; color: white; }
+        
         .add-cart { 
-            flex-grow: 1; background: #232f3e; color: white; border: none; 
-            padding: 10px; border-radius: 5px; cursor: pointer; font-weight: 600;
+            flex-grow: 1; background: var(--gold); color: black; border: none; 
+            padding: 15px; border-radius: 10px; cursor: pointer; font-weight: 800;
+            text-transform: uppercase; transition: 0.3s;
         }
+        .add-cart:hover { background: #fff; }
 
-        /* Order Button Floating */
+        /* Floating Button */
         #floatingOrder {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: var(--gold); color: black; padding: 18px 60px;
-            border-radius: 50px; font-weight: 800; text-transform: uppercase;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            position: fixed; bottom: 40px; right: 40px;
+            background: var(--gold); color: black; padding: 20px 40px;
+            border-radius: 15px; font-weight: 900; text-transform: uppercase;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
             display: none; border: none; cursor: pointer; z-index: 2000;
+            animation: pulse 2s infinite;
         }
 
-        /* Shop Details Modal */
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Fullscreen Image Viewer */
+        #imageViewer {
+            position: fixed; top:0; left:0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 5000;
+            display: none; justify-content: center; align-items: center;
+        }
+        #imageViewer img { max-width: 90%; max-height: 90%; border: 2px solid var(--gold); border-radius: 10px; }
+
+        /* Modal */
         #shopModal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); display: none; justify-content: center;
-            align-items: center; z-index: 3000;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center;
+            align-items: center; z-index: 3000; backdrop-filter: blur(10px);
         }
-        .modal-content { background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; }
+        .modal-content { 
+            background: #1a1a1a; padding: 40px; border-radius: 25px; 
+            max-width: 450px; width: 90%; border: 1px solid var(--gold);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
+    <div id="imageViewer" onclick="this.style.display='none'">
+        <img id="fullImg" src="">
+    </div>
+
     <section class="hero" id="heroSec">
-        <div class="welcome-text">Welcome to Excellence</div>
-        <h1 class="shop-name" id="displayShopName">LUXE TIMELESS</h1>
-        <p class="hero-tagline">Discover the art of horology. We bring you the world's most prestigious timepieces with guaranteed authenticity and global reach.</p>
+        <div class="welcome-text">The Peak of Luxury</div>
+        <h1 class="shop-name" id="displayShopName">LOADING LUXE...</h1>
+        <p class="hero-tagline">Step into a world where time is a masterpiece. Explore our curated collection of world-class timepieces designed for the bold and the elegant.</p>
         <div class="hero-btns">
-            <button class="btn btn-gold" onclick="startShopping()">Start Shopping</button>
-            <button class="btn btn-outline" onclick="showShopDetails()">Details of Shop</button>
+            <button class="btn btn-gold" onclick="startShopping()">Explore Collection</button>
+            <button class="btn btn-outline" onclick="showShopDetails()">Visit Boutique</button>
         </div>
     </section>
 
     <div class="shop-container" id="shopSec">
-        <h2 style="text-align: center; font-size: 2rem; margin-bottom: 40px;">Our Collection</h2>
+        <h2 style="text-align: center; font-size: 3rem; font-family: 'Playfair Display'; margin-bottom: 50px;">Legendary Pieces</h2>
         <div class="grid" id="productGrid">
             </div>
     </div>
 
-    <button id="floatingOrder" onclick="goToOrder()">Proceed to Order</button>
+    <button id="floatingOrder" onclick="goToOrder()">Checkout My Selection ➔</button>
 
     <div id="shopModal" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="modalName">Shop Name</h2>
-            <p><strong>📍 Address:</strong> <span id="modalAddr"></span></p>
-            <p><strong>📞 Contact:</strong> <span id="modalTel"></span></p>
-            <button class="btn btn-gold" style="width: 100%" onclick="document.getElementById('shopModal').style.display='none'">Close</button>
+            <h2 id="modalName" style="font-family: 'Playfair Display'; color: var(--gold); font-size: 2rem;">Shop Name</h2>
+            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <p style="font-size: 1.1rem; margin: 10px 0;"><strong>📍 LOCATION</strong></p>
+            <p id="modalAddr" style="color: #bbb;"></p>
+            <p style="font-size: 1.1rem; margin: 20px 0 10px;"><strong>📞 CONCIERGE</strong></p>
+            <p id="modalTel" style="color: var(--gold); font-weight: 800; font-size: 1.2rem;"></p>
+            <br>
+            <button class="btn btn-gold" style="width: 100%" onclick="document.getElementById('shopModal').style.display='none'">Return to Store</button>
         </div>
     </div>
 
@@ -134,17 +252,16 @@
         const db = getFirestore(app);
 
         let cart = [];
-        let shopData = {};
 
         // Load Shop Identity
         const loadShop = async () => {
             const snap = await getDoc(doc(db, "settings", "shopInfo"));
             if(snap.exists()){
-                shopData = snap.data();
-                document.getElementById('displayShopName').innerText = shopData.name;
-                document.getElementById('modalName').innerText = shopData.name;
-                document.getElementById('modalAddr').innerText = shopData.address;
-                document.getElementById('modalTel').innerText = shopData.contact;
+                const data = snap.data();
+                document.getElementById('displayShopName').innerText = data.name;
+                document.getElementById('modalName').innerText = data.name;
+                document.getElementById('modalAddr').innerText = data.address;
+                document.getElementById('modalTel').innerText = data.contact;
             }
         };
         loadShop();
@@ -157,24 +274,32 @@
                 const p = d.data();
                 grid.innerHTML += `
                     <div class="product-card">
-                        <div class="img-holder"><img src="${p.imageUrl}"></div>
+                        <div class="img-holder" onclick="viewImage('${p.imageUrl}')">
+                            <span class="expand-overlay">🔍 Click to Expand</span>
+                            <img src="${p.imageUrl}">
+                        </div>
                         <div class="info">
                             <h3>${p.name}</h3>
                             <p>${p.details}</p>
                             <div class="price">$${p.price}</div>
                             <div class="actions">
                                 <div class="qty-box">
-                                    <button class="qty-btn" onclick="updateQty('${d.id}', -1)">-</button>
+                                    <button class="qty-btn" onclick="updateQty('${d.id}', -1)">−</button>
                                     <span class="qty-val" id="qty-${d.id}">1</span>
                                     <button class="qty-btn" onclick="updateQty('${d.id}', 1)">+</button>
                                 </div>
-                                <button class="add-cart" onclick="addToCart('${d.id}', '${p.name}', ${p.price})">Add Cart</button>
+                                <button class="add-cart" onclick="addToCart('${d.id}', '${p.name}', ${p.price})">Add to Cart</button>
                             </div>
                         </div>
                     </div>
                 `;
             });
         });
+
+        window.viewImage = (url) => {
+            document.getElementById('fullImg').src = url;
+            document.getElementById('imageViewer').style.display = 'flex';
+        };
 
         window.startShopping = () => {
             document.getElementById('heroSec').style.display = 'none';
@@ -196,17 +321,12 @@
         window.addToCart = (id, name, price) => {
             const qty = parseInt(document.getElementById('qty-'+id).innerText);
             const item = { id, name, price, qty };
-            
-            // Remove if exists to update
             cart = cart.filter(c => c.id !== id);
             cart.push(item);
-            
             document.getElementById('floatingOrder').style.display = 'block';
-            alert(`${name} added to cart!`);
         };
 
         window.goToOrder = () => {
-            // Store cart in local storage for order.html
             localStorage.setItem('luxe_cart', JSON.stringify(cart));
             window.location.href = "order.html";
         };
