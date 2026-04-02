@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Luxe Watches</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #121212; }
+        body { 
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif; 
+            background: var(--dark); color: white;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .gateway-card {
+            width: 90%; max-width: 450px; background: #fff; color: #333;
+            padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        h2 { margin-top: 0; font-weight: 600; letter-spacing: -1px; color: var(--dark); }
+        p { color: #666; font-size: 0.9rem; margin-bottom: 25px; }
+        
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: #888; }
+        input, select { 
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; 
+            box-sizing: border-box; font-family: inherit;
+        }
+        
+        .address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .btn-start {
+            width: 100%; padding: 16px; background: var(--dark); color: white;
+            border: none; border-radius: 10px; font-weight: 600; cursor: pointer;
+            margin-top: 20px; transition: 0.3s; font-size: 1rem;
+        }
+        .btn-start:hover { background: var(--gold); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="gateway-card">
+    <h2>Luxe <span style="color:var(--gold)">Collection</span></h2>
+    <p>Please provide your delivery details to enter the showroom.</p>
+
+    <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="custName" placeholder="John Doe">
+    </div>
+
+    <div class="input-group">
+        <label>Contact Number</label>
+        <input type="tel" id="custContact" placeholder="+1 234 567 890">
+    </div>
+
+    <div class="input-group">
+        <label>Country</label>
+        <input type="text" id="custCountry" placeholder="e.g. USA">
+    </div>
+
+    <div class="address-grid">
+        <div class="input-group">
+            <label>State / Province</label>
+            <input type="text" id="custState" placeholder="e.g. New York">
+        </div>
+        <div class="input-group">
+            <label>City</label>
+            <input type="text" id="custCity" placeholder="e.g. Manhattan">
+        </div>
+    </div>
+
+    <button class="btn-start" onclick="startShopping()">Start for Order</button>
+</div>
+
+<script>
+    function startShopping() {
+        const name = document.getElementById('custName').value;
+        const contact = document.getElementById('custContact').value;
+        const country = document.getElementById('custCountry').value;
+        const state = document.getElementById('custState').value;
+        const city = document.getElementById('custCity').value;
+
+        if(!name || !contact || !country || !state || !city) {
+            alert("Please fill all details to continue.");
+            return;
+        }
+
+        // Save to browser memory (Local Storage)
+        const customerData = {
+            name: name,
+            contact: contact,
+            address: `${city}, ${state}, ${country}`,
+            date: new Date().toLocaleDateString()
+        };
+
+        localStorage.setItem('luxe_customer', JSON.stringify(customerData));
+
+        // Go to Main Shop
+        window.location.href = "main.html";
+    }
+</script>
+
+</body>
+</html>
