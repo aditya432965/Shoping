@@ -90,7 +90,7 @@
             <div class="input-group">
                 <label>Delivery Address / Live Location</label>
                 <input type="text" id="custAddress" placeholder="Fetching location or type address...">
-                <button class="location-btn" onclick="getLocation()">📍 Fetch Live Location</button>
+                <button class="location-btn" onclick="getLocation()">📍 Update with Live Location</button>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
                     </tr>
                 </thead>
                 <tbody id="cartItems">
-                    </tbody>
+                </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="3" style="text-align:right; padding-top:20px;">Net Amount:</td>
@@ -124,14 +124,13 @@
         <p style="font-size: 1.2rem; opacity: 0.8;">Your timeless piece is being prepared.</p>
         <p style="color: var(--gold); margin-top: 20px;">We will contact you shortly.</p>
         <br>
-        <button class="btn-gold" style="padding: 10px 30px; border-radius: 20px; cursor:pointer;" onclick="window.location.href='main.html'">Back to Store</button>
+        <button class="process-btn" style="width: auto; padding: 10px 40px;" onclick="window.location.href='main.html'">Back to Store</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        // Firebase Config (Keep this matching your main.html)
         const firebaseConfig = { 
             apiKey: "AIzaSyBlwCl6J9lV30HsyHYoqo_sIBYUcIcY-as",
             authDomain: "watchshop-48f6a.firebaseapp.com",
@@ -144,12 +143,19 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // --- FETCH CUSTOMER DATA FROM INDEX.HTML ---
+        const savedCustomer = JSON.parse(localStorage.getItem('luxe_customer'));
+        if (savedCustomer) {
+            document.getElementById('custName').value = savedCustomer.name || "";
+            document.getElementById('custPhone').value = savedCustomer.contact || "";
+            document.getElementById('custAddress').value = savedCustomer.address || "";
+        }
+
         // Load Cart Data
         const cart = JSON.parse(localStorage.getItem('luxe_cart')) || [];
         const cartTable = document.getElementById('cartItems');
         let total = 0;
 
-        // Populate Table
         cart.forEach(item => {
             const lineTotal = item.qty * item.price;
             total += lineTotal;
@@ -202,7 +208,7 @@
 
             try {
                 await addDoc(collection(db, "orders"), orderData);
-                localStorage.removeItem('luxe_cart'); // Clear cart
+                localStorage.removeItem('luxe_cart'); 
                 document.getElementById('orderPage').style.display = 'none';
                 document.getElementById('successOverlay').style.display = 'flex';
             } catch (e) {
