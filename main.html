@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe Watches | Collections</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #0a0a0a; --white: #ffffff; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f4f4f4; color: var(--dark); overflow-x: hidden; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .welcome-text { font-size: 1.2rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.9; }
+        .shop-name { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); margin: 0; }
+        .hero-tagline { font-size: 1.1rem; max-width: 600px; margin: 20px 0; line-height: 1.6; font-weight: 300; }
+
+        .hero-btns { display: flex; gap: 15px; margin-top: 30px; }
+        .btn { 
+            padding: 15px 35px; border-radius: 50px; border: none; font-weight: 600; 
+            cursor: pointer; transition: 0.3s; text-decoration: none; font-size: 0.9rem;
+        }
+        .btn-gold { background: var(--gold); color: black; }
+        .btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .btn:hover { transform: scale(1.05); }
+
+        /* Shop Section */
+        .shop-container { max-width: 1200px; margin: 50px auto; padding: 0 20px; display: none; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+
+        /* Amazon-Style Card */
+        .product-card { 
+            background: white; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .img-holder { width: 100%; height: 250px; background: #eee; position: relative; }
+        .img-holder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .info h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
+        .info p { font-size: 0.85rem; color: #666; margin-bottom: 15px; flex-grow: 1; }
+        .price { font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 15px; }
+
+        /* Counter UI */
+        .actions { display: flex; align-items: center; gap: 10px; }
+        .qty-box { 
+            display: flex; align-items: center; border: 1px solid #ddd; 
+            border-radius: 5px; overflow: hidden;
+        }
+        .qty-btn { padding: 8px 12px; background: #f8f9fa; border: none; cursor: pointer; font-weight: bold; }
+        .qty-val { padding: 0 15px; font-weight: 600; }
+        .add-cart { 
+            flex-grow: 1; background: #232f3e; color: white; border: none; 
+            padding: 10px; border-radius: 5px; cursor: pointer; font-weight: 600;
+        }
+
+        /* Order Button Floating */
+        #floatingOrder {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: black; padding: 18px 60px;
+            border-radius: 50px; font-weight: 800; text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            display: none; border: none; cursor: pointer; z-index: 2000;
+        }
+
+        /* Shop Details Modal */
+        #shopModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center;
+            align-items: center; z-index: 3000;
+        }
+        .modal-content { background: white; padding: 40px; border-radius: 15px; max-width: 400px; width: 90%; }
+    </style>
+</head>
+<body>
+
+    <section class="hero" id="heroSec">
+        <div class="welcome-text">Welcome to Excellence</div>
+        <h1 class="shop-name" id="displayShopName">LUXE TIMELESS</h1>
+        <p class="hero-tagline">Discover the art of horology. We bring you the world's most prestigious timepieces with guaranteed authenticity and global reach.</p>
+        <div class="hero-btns">
+            <button class="btn btn-gold" onclick="startShopping()">Start Shopping</button>
+            <button class="btn btn-outline" onclick="showShopDetails()">Details of Shop</button>
+        </div>
+    </section>
+
+    <div class="shop-container" id="shopSec">
+        <h2 style="text-align: center; font-size: 2rem; margin-bottom: 40px;">Our Collection</h2>
+        <div class="grid" id="productGrid">
+            </div>
+    </div>
+
+    <button id="floatingOrder" onclick="goToOrder()">Proceed to Order</button>
+
+    <div id="shopModal" onclick="this.style.display='none'">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 id="modalName">Shop Name</h2>
+            <p><strong>📍 Address:</strong> <span id="modalAddr"></span></p>
+            <p><strong>📞 Contact:</strong> <span id="modalTel"></span></p>
+            <button class="btn btn-gold" style="width: 100%" onclick="document.getElementById('shopModal').style.display='none'">Close</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBlwCl6J9lV30HsyHYoqo_sIBYUcIcY-as",
+            authDomain: "watchshop-48f6a.firebaseapp.com",
+            projectId: "watchshop-48f6a",
+            storageBucket: "watchshop-48f6a.firebasestorage.app",
+            messagingSenderId: "420233109126",
+            appId: "1:420233109126:web:5ee59da9ebf065ecc6bb07" 
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let cart = [];
+        let shopData = {};
+
+        // Load Shop Identity
+        const loadShop = async () => {
+            const snap = await getDoc(doc(db, "settings", "shopInfo"));
+            if(snap.exists()){
+                shopData = snap.data();
+                document.getElementById('displayShopName').innerText = shopData.name;
+                document.getElementById('modalName').innerText = shopData.name;
+                document.getElementById('modalAddr').innerText = shopData.address;
+                document.getElementById('modalTel').innerText = shopData.contact;
+            }
+        };
+        loadShop();
+
+        // Load Products
+        onSnapshot(collection(db, "products"), (snap) => {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = "";
+            snap.forEach(d => {
+                const p = d.data();
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="img-holder"><img src="${p.imageUrl}"></div>
+                        <div class="info">
+                            <h3>${p.name}</h3>
+                            <p>${p.details}</p>
+                            <div class="price">$${p.price}</div>
+                            <div class="actions">
+                                <div class="qty-box">
+                                    <button class="qty-btn" onclick="updateQty('${d.id}', -1)">-</button>
+                                    <span class="qty-val" id="qty-${d.id}">1</span>
+                                    <button class="qty-btn" onclick="updateQty('${d.id}', 1)">+</button>
+                                </div>
+                                <button class="add-cart" onclick="addToCart('${d.id}', '${p.name}', ${p.price})">Add Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        window.startShopping = () => {
+            document.getElementById('heroSec').style.display = 'none';
+            document.getElementById('shopSec').style.display = 'block';
+            window.scrollTo(0,0);
+        };
+
+        window.showShopDetails = () => {
+            document.getElementById('shopModal').style.display = 'flex';
+        };
+
+        window.updateQty = (id, change) => {
+            let el = document.getElementById('qty-'+id);
+            let val = parseInt(el.innerText) + change;
+            if(val < 1) val = 1;
+            el.innerText = val;
+        };
+
+        window.addToCart = (id, name, price) => {
+            const qty = parseInt(document.getElementById('qty-'+id).innerText);
+            const item = { id, name, price, qty };
+            
+            // Remove if exists to update
+            cart = cart.filter(c => c.id !== id);
+            cart.push(item);
+            
+            document.getElementById('floatingOrder').style.display = 'block';
+            alert(`${name} added to cart!`);
+        };
+
+        window.goToOrder = () => {
+            // Store cart in local storage for order.html
+            localStorage.setItem('luxe_cart', JSON.stringify(cart));
+            window.location.href = "order.html";
+        };
+    </script>
+</body>
+</html>
